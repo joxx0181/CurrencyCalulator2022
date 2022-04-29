@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner toCurrency;
     TextView textView;
     Button calcButton;
+    Button saveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         toCurrency = findViewById(R.id.convertCurrencyTo);
         textView = findViewById(R.id.convertedValue);
         calcButton = findViewById(R.id.calcButton);
+        saveButton = findViewById(R.id.saveToSQLliteButton);
 
         // Perform click event using lambda on calcbutton
         calcButton.setOnClickListener(view -> {
@@ -82,7 +84,10 @@ public class MainActivity extends AppCompatActivity {
                 int val = Integer.parseInt(amountVal);
                 double calcValue = val * rate;
                 textView.setText(String.format("%.2f", calcValue));
+        });
 
+        // Perform click event using lambda on calcbutton
+        saveButton.setOnClickListener(view -> {
 
             if (!textView.getText().toString().isEmpty()) {
                 if (saveCurrency.insert(fromCurrency.getText().toString(), textView.getText().toString())) {
@@ -96,5 +101,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "ERROR", Toast.LENGTH_LONG).show();
             }
         });
+
     }
 }
