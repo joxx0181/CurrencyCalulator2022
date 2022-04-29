@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(String.format("%.2f", calcValue));
         });
 
-        // Perform click event using lambda on calcbutton
+        // Perform click event using lambda on savebutton
         saveButton.setOnClickListener(view -> {
 
             if (!textView.getText().toString().isEmpty()) {
