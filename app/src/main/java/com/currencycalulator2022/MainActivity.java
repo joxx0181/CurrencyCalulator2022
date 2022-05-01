@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         calcButton = findViewById(R.id.calcButton);
         saveButton = findViewById(R.id.saveToSQLliteButton);
 
+
         // Perform click event using lambda on calcbutton
         calcButton.setOnClickListener(view -> {
 
@@ -83,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
                 // Calculate value
                 int val = Integer.parseInt(amountVal);
                 double calcValue = val * rate;
+
+                // Using format "%.2f" for display only 2 decimals
                 textView.setText(String.format("%.2f", calcValue));
         });
 
@@ -90,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         saveButton.setOnClickListener(view -> {
 
             if (!textView.getText().toString().isEmpty()) {
-                if (saveCurrency.insert(fromCurrency.getText().toString(), textView.getText().toString())) {
+                if (saveCurrency.insert(enterAmount.getText().toString(), textView.getText().toString())) {
 
                     // Using Toast to view a little message for the user
                     Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
@@ -101,6 +104,5 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "ERROR", Toast.LENGTH_LONG).show();
             }
         });
-
     }
 }
