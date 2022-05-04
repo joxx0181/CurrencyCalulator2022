@@ -6,9 +6,13 @@
     <string name="eur">EUR</string>
     <string name="calculated_value" />
     <string name="save">save</string>
+    <string name="view">View</string>
+    <string name="go_back">Go Back</string>
+    <string name="amount_in_euro">Amount in Euro</string>
+    <string name="selected_currency">Selected currency</string>
+    <string name="calculated_val">Calculated value</string>
     <array name="currency_to">
         <item>DKK</item>
-        <item>EUR</item>
         <item>USD</item>
         <item>GBP</item>
         <item>SEK</item>

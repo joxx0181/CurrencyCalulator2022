@@ -2,12 +2,20 @@ package com.currencycalulator2022;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
+
+import java.util.List;
 
 /**
  * @author Joxx0181
@@ -22,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     Button calcButton;
     Button saveButton;
+    Button viewButton;
+    Button goBackButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
         textView = findViewById(R.id.convertedValue);
         calcButton = findViewById(R.id.calcButton);
         saveButton = findViewById(R.id.saveToSQLliteButton);
-
+        viewButton = findViewById(R.id.viewSavedInSQLliteButton);
+        goBackButton = findViewById(R.id.backToCalcButton);
 
         // Perform click event using lambda on calcbutton
         calcButton.setOnClickListener(view -> {
@@ -89,20 +100,63 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(String.format("%.2f", calcValue));
         });
 
-        // Perform click event using lambda on savebutton
+        // Perform click event using lambda on saveButton
         saveButton.setOnClickListener(view -> {
 
+            String toCurr2 = toCurrency.getSelectedItem().toString();
+
             if (!textView.getText().toString().isEmpty()) {
-                if (saveCurrency.insert(enterAmount.getText().toString(), textView.getText().toString())) {
+                if (saveCurrency.insert(enterAmount.getText().toString(), toCurr2, textView.getText().toString())) {
 
                     // Using Toast to view a little message for the user
                     Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+
+                    // Setting visibility
+                    viewButton.setVisibility(View.VISIBLE);
+                    goBackButton.setVisibility(View.VISIBLE);
+
+                    toCurrency.setVisibility(View.INVISIBLE);
+                    enterAmount.setVisibility(View.INVISIBLE);
+                    fromCurrency.setVisibility(View.INVISIBLE);
+                    textView.setVisibility(View.INVISIBLE);
+                    calcButton.setVisibility(View.INVISIBLE);
+                    saveButton.setVisibility(View.INVISIBLE);
+
                 } else {
                     Toast.makeText(MainActivity.this, "NOT Inserted", Toast.LENGTH_LONG).show();
                 }
             } else {
                 Toast.makeText(MainActivity.this, "ERROR", Toast.LENGTH_LONG).show();
             }
+        });
+
+        // Perform click event using lambda on viewButton
+        viewButton.setOnClickListener(view -> {
+
+            // Hide keyboard, when not used
+            UIUtil.hideKeyboard(this);
+
+            List<String> datalist = saveCurrency.getAllstoredInDB();
+            for(String enteredAmount: datalist) {
+                        Toast.makeText(MainActivity.this, enteredAmount, Toast.LENGTH_SHORT).show();
+            }
+            for(String selectedCur: datalist) {
+                Toast.makeText(MainActivity.this, selectedCur, Toast.LENGTH_SHORT).show();
+            }
+            for(String calculatedVal: datalist) {
+                Toast.makeText(MainActivity.this, calculatedVal, Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+        // Perform click event using lambda on goBackButton
+        goBackButton.setOnClickListener(view -> {
+
+            // Create intent for reset app
+            Intent resetApp = getIntent();
+            finish();
+            startActivity(resetApp);
+
         });
     }
 }
