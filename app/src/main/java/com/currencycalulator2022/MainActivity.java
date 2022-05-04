@@ -2,11 +2,9 @@ package com.currencycalulator2022;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -137,16 +135,10 @@ public class MainActivity extends AppCompatActivity {
             UIUtil.hideKeyboard(this);
 
             List<String> datalist = saveCurrency.getAllstoredInDB();
-            for(String enteredAmount: datalist) {
-                        Toast.makeText(MainActivity.this, enteredAmount, Toast.LENGTH_SHORT).show();
-            }
-            for(String selectedCur: datalist) {
-                Toast.makeText(MainActivity.this, selectedCur, Toast.LENGTH_SHORT).show();
-            }
-            for(String calculatedVal: datalist) {
-                Toast.makeText(MainActivity.this, calculatedVal, Toast.LENGTH_SHORT).show();
-            }
 
+            for(String allData: datalist) {
+                Toast.makeText(this, allData, Toast.LENGTH_LONG).show();
+            }
         });
 
         // Perform click event using lambda on goBackButton
